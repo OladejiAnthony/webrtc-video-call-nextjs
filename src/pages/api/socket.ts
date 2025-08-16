@@ -25,7 +25,8 @@ const socketHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
   if (!res.socket?.server?.io) {
     console.log("Starting Socket.IO server...");
     const io = new SocketIOServer(res.socket.server as any, {
-      path: "/api/socket.io",
+      //path: "/api/socket.io",
+      path: "https://peer.agregartech.com/",
       addTrailingSlash: false,
       cors: {
         origin: process.env.NEXT_PUBLIC_VERCEL_URL

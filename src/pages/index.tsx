@@ -25,8 +25,13 @@ export default function WebRTCPage() {
 
   // Initialize socket connection
   useEffect(() => {
-    socketRef.current = io({
-      path: '/api/socket.io',
+    // socketRef.current = io({
+    //   //path: '/api/socket.io',
+    //   path: 'https://peer.agregartech.com/',
+    // });
+    socketRef.current = io('https://peer.agregartech.com/', {
+      path: '/socket.io',
+      transports: ['websocket']
     });
 
     return () => {
@@ -42,7 +47,7 @@ export default function WebRTCPage() {
 
     const socket = socketRef.current;
 
-    // const socket = io('https://your-external-server.com', {
+    // const socket = io('https://peer.agregartech.com/', {
     //   path: '/socket.io',
     //   transports: ['websocket']
     // });

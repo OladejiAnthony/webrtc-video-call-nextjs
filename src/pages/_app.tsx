@@ -7,15 +7,15 @@ import '../styles/globals.css';
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     // Initialize socket connection
-    const socket = io({
-      path: '/api/socket.io',
-      transports: ['websocket'], // Force WebSocket transport
-    });
-
-    // const socket = io('https://your-external-server.com', {
-    //   path: '/socket.io',
-    //   transports: ['websocket']
+    // const socket = io({
+    //   path: '/api/socket.io',
+    //   transports: ['websocket'], // Force WebSocket transport
     // });
+
+    const socket = io('https://peer.agregartech.com/', {
+      path: '/socket.io',
+      transports: ['websocket']
+    });
 
     return () => {
       socket.disconnect();
