@@ -42,6 +42,11 @@ export default function WebRTCPage() {
 
     const socket = socketRef.current;
 
+    // const socket = io('https://your-external-server.com', {
+    //   path: '/socket.io',
+    //   transports: ['websocket']
+    // });
+
     socket.on('peers-in-room', ({ peers }: { peers: string[] }) => {
       setStatus(`Joined room. Peers here: ${peers.length}`);
     });
@@ -143,13 +148,28 @@ export default function WebRTCPage() {
   const createPeerConnection = useCallback((): RTCPeerConnection => {
     console.log('Creating new peer connection...');
 
-    const pc = new RTCPeerConnection({
+    // const pc = new RTCPeerConnection({
+    //   iceServers: [
+    //     { urls: 'stun:stun.l.google.com:19302' },
+    //     { urls: 'stun:stun1.l.google.com:19302' },
+    //   ],
+    //   iceCandidatePoolSize: 10,
+    // });
+
+    const pcConfig = {
       iceServers: [
-        { urls: 'stun:stun.l.google.com:19302' },
-        { urls: 'stun:stun1.l.google.com:19302' },
-      ],
-      iceCandidatePoolSize: 10,
-    });
+        {
+          urls: [
+            'stun:stun.l.google.com:19302',
+            'stun:stun1.l.google.com:19302',
+            'stun:stun2.l.google.com:19302'
+          ]
+        }
+      ]
+    };
+
+    const pc = new RTCPeerConnection(pcConfig);
+
 
     pc.onicecandidate = (e) => {
       if (e.candidate && roomId && socketRef.current) {
